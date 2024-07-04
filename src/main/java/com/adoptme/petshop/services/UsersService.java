@@ -13,19 +13,23 @@ public class UsersService {
 
     @Autowired private UserRepository repository;
 
-    public User save (User user){
+    public User save(User user) {
         return repository.save(user);
     }
 
-    public List<User> readAll(){
+    public List<User> readAll() {
         return repository.findAll();
     }
 
-    public Optional<User> readOne(Long id){
+    public Optional<User> readOne(Long id) {
         return repository.findById(id);
     }
 
-    public void destroyOne (Long id){
-        repository.deleteById(id);
+    public Optional<User> destroyOne(Long id) {
+        Optional<User> user = repository.findById(id);
+        if (user.isPresent()) {
+            repository.deleteById(id);
+        }
+        return user;
     }
 }
